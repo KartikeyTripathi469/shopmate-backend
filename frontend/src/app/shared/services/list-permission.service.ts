@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -14,7 +13,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ListPermissionService extends BaseService {
-  constructor(override http: HttpClient) {
+  constructor() {
     super();
   }
 

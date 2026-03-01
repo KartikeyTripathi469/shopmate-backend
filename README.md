@@ -30,15 +30,58 @@ Based on our core API capabilities, ShoppMate offers a comprehensive suite of fe
 
 ## 🛠️ Getting Started
 
-### Backend
-1. Navigate to `backend/`.
-2. Configure your PostgreSQL database in `application.properties`.
-3. Run with `./mvnw spring-boot:run`.
+### 1. Environment Setup
 
-### Frontend
+Before running the project, you need to configure the environment variables.
+
+1.  Navigate to the `backend/` directory.
+2.  Copy `.env.example` to a new file named `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+3.  (Optional) Edit `.env` to customize your database credentials or JWT settings.
+
+### 2. Running with Docker (Recommended)
+
+The easiest way to run the entire stack (Backend, Frontend, and Database) is using Docker Compose from the root directory:
+
+```bash
+docker compose up --build
+```
+
+Access the application at:
+- **Frontend**: [http://localhost](http://localhost)
+- **Backend API**: [http://localhost:8080](http://localhost:8080)
+
+### 3. Running Manually (Development)
+
+If you prefer to run the components individually for development:
+
+#### Database
+You still need a PostgreSQL instance. You can run just the database via Docker:
+```bash
+docker compose up postgres -d
+```
+
+#### Backend
+1. Navigate to `backend/`.
+2. Ensure you have Java 17 installed.
+3. Run with:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+#### Frontend
 1. Navigate to `frontend/`.
-2. Install dependencies: `npm install`.
-3. Run with `ng serve`.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run with:
+   ```bash
+   npm start
+   ```
+4. Access at [http://localhost:4200](http://localhost:4200).
 
 ## 🤝 Contributing
 

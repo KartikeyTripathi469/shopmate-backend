@@ -1,5 +1,4 @@
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -17,7 +16,7 @@ import { BaseService } from './base.service';
 export class ShoppingListService extends BaseService {
   private apiUrl = `${environment.apiUrl}/lists`;
 
-  constructor(override http: HttpClient) {
+  constructor() {
     super();
   }
 

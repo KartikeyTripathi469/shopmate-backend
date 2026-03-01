@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemRequestDTO, ItemResponseDTO } from '../interfaces/item.interface';
@@ -12,7 +11,7 @@ import { BaseService } from './base.service';
 export class ItemService extends BaseService {
   private apiUrl = `${environment.apiUrl}/item`;
 
-  constructor(override http: HttpClient) {
+  constructor() {
     super();
   }
 

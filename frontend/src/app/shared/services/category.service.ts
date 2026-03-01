@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../interfaces/category.interface';
@@ -12,7 +11,7 @@ import { BaseService } from './base.service';
 export class CategoryService extends BaseService {
   private apiUrl = `${environment.apiUrl}/category`;
 
-  constructor(override http: HttpClient) {
+  constructor() {
     super();
   }
 

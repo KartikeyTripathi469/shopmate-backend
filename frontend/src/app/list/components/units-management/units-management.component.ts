@@ -47,12 +47,10 @@ export class UnitsManagementComponent implements OnInit {
   displayedColumns: string[] = ['name', 'symbol', 'actions'];
 
   ngOnInit(): void {
-    console.log('UnitsManagementComponent - Initializing');
     this.loadUnits();
   }
 
   loadUnits(): void {
-    console.log('UnitsManagementComponent - Loading units');
     this.loading = true;
     this.error = false;
 
@@ -60,17 +58,9 @@ export class UnitsManagementComponent implements OnInit {
       .getAllUnits()
       .pipe(
         tap((response) => {
-          console.log('UnitsManagementComponent - Units loaded:', response);
-          if (!response || response.length === 0) {
-            console.log('UnitsManagementComponent - No units found');
-          }
           this.unitsSubject.next(response || []);
         }),
-        catchError((error) => {
-          console.error(
-            'UnitsManagementComponent - Error loading units:',
-            error,
-          );
+        catchError(() => {
           this.error = true;
           this.unitsSubject.next([]);
           this.snackBar.open(
@@ -83,7 +73,6 @@ export class UnitsManagementComponent implements OnInit {
           return of([]);
         }),
         finalize(() => {
-          console.log('UnitsManagementComponent - Loading finished');
           this.loading = false;
           this.cdr.detectChanges();
         }),
@@ -92,7 +81,6 @@ export class UnitsManagementComponent implements OnInit {
   }
 
   editUnit(unit: Unit): void {
-    console.log('UnitsManagementComponent - Editing unit:', unit);
     const dialogRef = this.dialog.open(UnitDialogComponent, {
       width: '400px',
       data: { unit },
@@ -102,17 +90,12 @@ export class UnitsManagementComponent implements OnInit {
       if (result) {
         this.unitService.updateUnit(result).subscribe({
           next: () => {
-            console.log('UnitsManagementComponent - Unit updated successfully');
             this.loadUnits();
             this.snackBar.open('Unidade atualizada com sucesso', 'Fechar', {
               duration: 3000,
             });
           },
-          error: (error) => {
-            console.error(
-              'UnitsManagementComponent - Error updating unit:',
-              error,
-            );
+          error: () => {
             this.snackBar.open('Erro ao atualizar unidade', 'Fechar', {
               duration: 3000,
             });
@@ -123,21 +106,15 @@ export class UnitsManagementComponent implements OnInit {
   }
 
   deleteUnit(unit: Unit): void {
-    console.log('UnitsManagementComponent - Deleting unit:', unit);
     if (confirm(`Tem certeza que deseja excluir a unidade "${unit.name}"?`)) {
       this.unitService.deleteUnit(unit.id!).subscribe({
         next: () => {
-          console.log('UnitsManagementComponent - Unit deleted successfully');
           this.loadUnits();
           this.snackBar.open('Unidade excluída com sucesso', 'Fechar', {
             duration: 3000,
           });
         },
-        error: (error) => {
-          console.error(
-            'UnitsManagementComponent - Error deleting unit:',
-            error,
-          );
+        error: () => {
           this.snackBar.open('Erro ao excluir unidade', 'Fechar', {
             duration: 3000,
           });
@@ -147,7 +124,6 @@ export class UnitsManagementComponent implements OnInit {
   }
 
   openNewUnitDialog(): void {
-    console.log('UnitsManagementComponent - Opening new unit dialog');
     const dialogRef = this.dialog.open(UnitDialogComponent, {
       width: '400px',
       data: { unit: null },
@@ -157,17 +133,12 @@ export class UnitsManagementComponent implements OnInit {
       if (result) {
         this.unitService.addUnit(result).subscribe({
           next: () => {
-            console.log('UnitsManagementComponent - Unit added successfully');
             this.loadUnits();
             this.snackBar.open('Unidade adicionada com sucesso', 'Fechar', {
               duration: 3000,
             });
           },
-          error: (error) => {
-            console.error(
-              'UnitsManagementComponent - Error adding unit:',
-              error,
-            );
+          error: () => {
             this.snackBar.open('Erro ao adicionar unidade', 'Fechar', {
               duration: 3000,
             });

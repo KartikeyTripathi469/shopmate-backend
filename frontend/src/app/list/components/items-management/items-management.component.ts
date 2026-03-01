@@ -81,8 +81,28 @@ export class ItemsManagementComponent implements OnInit {
   }
 
   openAddItemDialog(): void {
-    // Implementar posteriormente com um dialog
-    console.log('Add item dialog should open here');
+    const dialogRef = this.dialog.open(ItemDialogComponent, {
+      width: '400px',
+      data: { item: null },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.itemService.addItem(result).subscribe({
+          next: () => {
+            this.loadData();
+            this.snackBar.open('Item adicionado com sucesso', 'Fechar', {
+              duration: 3000,
+            });
+          },
+          error: () => {
+            this.snackBar.open('Erro ao adicionar item', 'Fechar', {
+              duration: 3000,
+            });
+          },
+        });
+      }
+    });
   }
 
   editItem(item: ItemResponseDTO): void {
@@ -125,8 +145,7 @@ export class ItemsManagementComponent implements OnInit {
             duration: 3000,
           });
         },
-        error: (error) => {
-          console.error('Error deleting item:', error);
+        error: () => {
           this.snackBar.open('Erro ao excluir item', 'Fechar', {
             duration: 3000,
           });

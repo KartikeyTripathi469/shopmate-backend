@@ -30,15 +30,10 @@ export class AuthService {
   };
 
   login(loginRequest: LoginRequest): Observable<string> {
-    console.log(
-      'Attempting login with URL:',
-      `${this.API_BASE_URL}/auth/login`,
-    );
     return this.http
       .post(`${this.API_BASE_URL}/auth/login`, loginRequest, this.httpOptions)
       .pipe(
         tap((token) => {
-          console.log('Login successful, token received');
           localStorage.setItem(this.AUTH_TOKEN_KEY, token);
           this.isLoggedInSubject.next(true);
         }),
@@ -55,10 +50,6 @@ export class AuthService {
   }
 
   register(user: User): Observable<User> {
-    console.log(
-      'Attempting registration with URL:',
-      `${this.API_BASE_URL}/auth/sign`,
-    );
     return this.http
       .post<User>(`${this.API_BASE_URL}/auth/sign`, user, {
         headers: new HttpHeaders({
@@ -67,9 +58,7 @@ export class AuthService {
         }),
       })
       .pipe(
-        tap(() => console.log('Registration successful')),
-        catchError((error: HttpErrorResponse) => {
-          console.error('Registration error:', error);
+        catchError(() => {
           return throwError(
             () =>
               new Error(
