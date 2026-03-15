@@ -17,11 +17,14 @@ WORKDIR /app
 # Copy the built artifact from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
+# Create the certs directory
+RUN mkdir -p /app/certs
+
 # Runtime configuration
 ENV JAVA_OPTS="-Xms256m -Xmx512m" \
     SERVER_PORT=8080
 
 EXPOSE 8080
 
-# Execute the application
-ENTRYPOINT ["sh", "-c", "mkdir -p /app/certs && cp /etc/secrets/public_key.pem /app/certs/public_key.pem 2>/dev/null; cp /etc/secrets/private_key.pem /app/certs/private_key.pem 2>/dev/null; java $JAVA_OPTS -jar app.jar"]
+# Execute the application: Create symlinks to Render's secrets, then start Java
+ENTRYPOINT ["sh", "-c", "ln -sf /etc/secrets/public_key.pem /app/certs/public_key.pem && ln -sf /etc/secrets/private_key.pem /app/certs/private_key.pem && java $JAVA_OPTS -jar app.jar"]
