@@ -29,4 +29,4 @@ ENV JAVA_OPTS="-Xms256m -Xmx512m" \
 EXPOSE 8080
 
 # Execute the application
-ENTRYPOINT ["sh", "-c", "cp -r /etc/secrets/certs ./certs 2>/dev/null || true && java $JAVA_OPTS -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "mkdir -p /app/certs && cp /etc/secrets/certs/public_key.pem /app/certs/public_key.pem 2>/dev/null; cp /etc/secrets/certs/private_key.pem /app/certs/private_key.pem 2>/dev/null; java $JAVA_OPTS -jar app.jar"]
