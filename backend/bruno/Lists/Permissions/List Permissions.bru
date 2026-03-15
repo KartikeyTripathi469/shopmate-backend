@@ -1,0 +1,15 @@
+meta {
+  name: List Permissions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/lists/{{listId}}/permissions
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+}

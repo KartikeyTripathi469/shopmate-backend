@@ -1,0 +1,19 @@
+meta {
+  name: Create Item
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/item
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Milk",
+    "idCategory": 1,
+    "idUnit": 1
+  }
+}

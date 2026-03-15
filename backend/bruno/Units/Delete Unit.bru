@@ -1,0 +1,15 @@
+meta {
+  name: Delete Unit
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/unit/{{unitId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  unitId: 1
+}

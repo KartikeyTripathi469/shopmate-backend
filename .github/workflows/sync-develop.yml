@@ -1,0 +1,42 @@
+name: Sync Develop with Main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  sync-branches:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0 # Necessário para ter o histórico completo para o rebase
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync develop with main
+        run: |
+          echo "Waiting 10 seconds for GitHub to stabilize..."
+          sleep 10
+          git fetch origin main
+          
+          # Tenta o rebase, se falhar ele aborta e para o workflow
+          if ! git rebase origin/main; then
+            echo "❌ Conflict detected during rebase! Aborting..."
+            git rebase --abort
+            exit 1
+          fi
+          
+          echo "✅ Rebase successful. Pushing changes..."
+          git push origin develop --force-with-lease

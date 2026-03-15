@@ -1,0 +1,21 @@
+meta {
+  name: Update Shopping List
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/lists/{{listId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Birthday Party"
+  }
+}
+
+vars:pre-request {
+  listId: 1
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Delete Permission
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/lists/{{listId}}/permissions/{{permissionId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+  permissionId: 1
+}

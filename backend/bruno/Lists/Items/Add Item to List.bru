@@ -1,0 +1,23 @@
+meta {
+  name: Add Item to List
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/lists/{{listId}}/items
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "listId": {{listId}},
+    "itemId": 1,
+    "quantity": 2
+  }
+}
+
+vars:pre-request {
+  listId: 1
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Remove Item from List
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/lists/{{listId}}/items/{{listItemId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+  listItemId: 1
+}

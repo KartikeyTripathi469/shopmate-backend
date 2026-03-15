@@ -1,0 +1,25 @@
+meta {
+  name: Update List Item
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/lists/{{listId}}/items/{{listItemId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "listId": {{listId}},
+    "itemId": 1,
+    "quantity": 5,
+    "purchased": true
+  }
+}
+
+vars:pre-request {
+  listId: 1
+  listItemId: 1
+}

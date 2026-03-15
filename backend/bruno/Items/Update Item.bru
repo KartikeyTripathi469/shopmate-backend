@@ -1,0 +1,23 @@
+meta {
+  name: Update Item
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/item/{{itemId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Whole Milk",
+    "idCategory": 1,
+    "idUnit": 1
+  }
+}
+
+vars:pre-request {
+  itemId: 1
+}

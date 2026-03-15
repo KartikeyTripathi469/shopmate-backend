@@ -1,0 +1,15 @@
+meta {
+  name: Get Shopping List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/lists/{{listId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+}

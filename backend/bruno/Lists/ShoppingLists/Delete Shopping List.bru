@@ -1,0 +1,15 @@
+meta {
+  name: Delete Shopping List
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/lists/{{listId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+}

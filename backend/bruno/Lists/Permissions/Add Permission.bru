@@ -1,0 +1,23 @@
+meta {
+  name: Add Permission
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/lists/{{listId}}/permissions
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "idList": {{listId}},
+    "idUser": 2,
+    "permission": "WRITE"
+  }
+}
+
+vars:pre-request {
+  listId: 1
+}

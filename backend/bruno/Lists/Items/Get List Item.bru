@@ -1,0 +1,16 @@
+meta {
+  name: Get List Item
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/lists/{{listId}}/items/{{listItemId}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  listId: 1
+  listItemId: 1
+}
