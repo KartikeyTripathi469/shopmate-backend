@@ -20,7 +20,7 @@ public class RsaKeyConfig {
     @Value("${rsa.public-key.location:classpath:certs/public_key.pem}")
     private String publicKeyLocation;
 
-    @Value("${rsa.private-key.location:classpath:certs/private_key.pem}")
+    @Value("${rsa.private-key.location:file:/etc/secrets/private_key.pem}")
     private String privateKeyLocation;
 
     public RsaKeyConfig(ResourceLoader resourceLoader) {
@@ -31,12 +31,12 @@ public class RsaKeyConfig {
     public RSAPublicKey publicKey() throws Exception {
         Resource resource = resourceLoader.getResource(publicKeyLocation);
         if (!resource.exists() || !resource.isReadable()) {
-            throw new IllegalStateException("JWT public key not found or unreadable: " + publicKeyLocation);
+            throw new IllegalStateException("Public key not found: " + publicKeyLocation);
         }
+
         String pem = new String(resource.getInputStream().readAllBytes(), "UTF-8")
-                .replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\\s+", "");
+                .replaceAll("-----BEGIN PUBLIC KEY-----|-----END PUBLIC KEY-----|\\s+", "");
+
         byte[] decoded = Base64.getDecoder().decode(pem);
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return (RSAPublicKey) kf.generatePublic(new X509EncodedKeySpec(decoded));
@@ -46,12 +46,12 @@ public class RsaKeyConfig {
     public RSAPrivateKey privateKey() throws Exception {
         Resource resource = resourceLoader.getResource(privateKeyLocation);
         if (!resource.exists() || !resource.isReadable()) {
-            throw new IllegalStateException("JWT private key not found or unreadable: " + privateKeyLocation);
+            throw new IllegalStateException("Private key not found: " + privateKeyLocation);
         }
+
         String pem = new String(resource.getInputStream().readAllBytes(), "UTF-8")
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s+", "");
+                .replaceAll("-----BEGIN PRIVATE KEY-----|-----END PRIVATE KEY-----|\\s+", "");
+
         byte[] decoded = Base64.getDecoder().decode(pem);
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return (RSAPrivateKey) kf.generatePrivate(new PKCS8EncodedKeySpec(decoded));
