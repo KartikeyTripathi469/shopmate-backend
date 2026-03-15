@@ -14,12 +14,7 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Create a non-root user for better security
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-
 # Copy the built artifact from the build stage
-# We use a wildcard to capture the jar, but ensure only one is copied if possible
 COPY --from=build /app/target/*.jar app.jar
 
 # Runtime configuration
